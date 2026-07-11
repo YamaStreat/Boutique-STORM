@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S.T.O.R.M. Studio — Développement FiveM sur mesure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #16140f;
+    --bg-panel: #1e1b14;
+    --bg-raised: #29241a;
+    --line: #383021;
+    --line-bright: #574a2c;
+    --text: #f2ede2;
+    --text-dim: #a89a7a;
+    --amber: #ffb020;
+    --amber-soft: rgba(255, 176, 32, 0.14);
+    --chrome: #cdeaf0;
+    --tail-red: #e2483f;
+    --font-display: 'Big Shoulders Display', sans-serif;
+    --font-body: 'Work Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  ::selection { background: rgba(255,176,32,0.25); }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background:
+      radial-gradient(ellipse 900px 480px at 85% -8%, rgba(255,176,32,0.07), transparent),
+      var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+
+  a { color: inherit; }
+  button, a { font-family: inherit; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(22,20,15,0.86);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .brand span { color: var(--amber); }
+  nav .links {
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+  nav .links a { text-decoration: none; transition: color .15s; }
+  nav .links a:hover { color: var(--text); }
+  nav .cta {
+    background: var(--amber);
+    color: #1b1305;
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 9px 18px;
+    border-radius: 3px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    nav .links { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 72px 0 60px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+  }
+  .hero .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(40px, 6vw, 60px);
+    line-height: 0.98;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--amber);
+  }
+  .hero p {
+    margin-top: 20px;
+    color: var(--text-dim);
+    font-size: 16.5px;
+    max-width: 460px;
+  }
+  .hero .actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--amber);
+    color: #1b1305;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: filter .15s, transform .15s;
+  }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid var(--line-bright);
+    color: var(--text);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 13px 22px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: border-color .15s;
+  }
+  .btn-ghost:hover { border-color: var(--amber); }
+
+  /* ---------- Signature : jauge style compte-tours ---------- */
+  .gauge-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .gauge-svg { width: 100%; max-width: 260px; height: auto; }
+  .gauge-needle {
+    transform-origin: 130px 130px;
+    animation: rev-up 1.8s cubic-bezier(.2,.9,.25,1) forwards;
+  }
+  @keyframes rev-up {
+    0% { transform: rotate(-90deg); }
+    100% { transform: rotate(var(--needle-angle, 55deg)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gauge-needle { animation: none; transform: rotate(var(--needle-angle, 55deg)); }
+  }
+  .gauge-readout {
+    font-family: var(--font-mono);
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--amber);
+    margin-top: 4px;
+  }
+  .gauge-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ---------- Sections communes ---------- */
+  section { padding: 70px 0; }
+  section.alt { background: var(--bg-panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .section-head { margin-bottom: 40px; max-width: 560px; }
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 36px);
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+  .section-head p {
+    color: var(--text-dim);
+    margin-top: 10px;
+    font-size: 15px;
+  }
+
+  /* ---------- Portfolio ---------- */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .project-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color .15s, transform .15s;
+  }
+  .project-card:hover { border-color: var(--line-bright); transform: translateY(-2px); }
+  .project-thumb {
+    height: 150px;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,176,32,0.06) 0 2px, transparent 2px 14px),
+      var(--bg-panel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: .5px;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .project-body { padding: 18px 20px 20px; }
+  .project-ref {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 1px;
+  }
+  .project-body h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin: 6px 0 8px;
+    letter-spacing: .2px;
+  }
+  .project-body p {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .project-tag {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--chrome);
+    border: 1px solid var(--line-bright);
+    padding: 3px 9px;
+    border-radius: 10px;
+  }
+
+  /* ---------- Tarifs ---------- */
+  .price-note {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: -22px;
+    margin-bottom: 34px;
+  }
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+  }
+  .price-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card.featured { border-color: var(--amber); position: relative; }
+  .price-card.featured::before {
+    content: "LE PLUS DEMANDÉ";
+    position: absolute;
+    top: -11px; left: 24px;
+    background: var(--amber);
+    color: #1b1305;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .price-card h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+  }
+  .price-amount {
+    font-family: var(--font-mono);
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--amber);
+    margin: 14px 0 4px;
+  }
+  .price-amount span { font-size: 14px; color: var(--text-dim); font-weight: 400; }
+  .price-delay {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  .price-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    font-size: 13.5px;
+    color: var(--text);
+    margin-bottom: 22px;
+    flex: 1;
+  }
+  .price-card ul li { padding-left: 18px; position: relative; }
+  .price-card ul li::before {
+    content: "▸";
+    position: absolute; left: 0;
+    color: var(--amber);
+  }
+
+  /* ---------- Avis ---------- */
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .review-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    border-radius: 4px;
+    padding: 22px 22px 20px;
+  }
+  .review-score {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--amber);
+    letter-spacing: .5px;
+    margin-bottom: 10px;
+  }
+  .review-quote {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .review-who {
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ---------- Footer / CTA ---------- */
+  .cta-band {
+    text-align: center;
+    padding: 80px 0;
+  }
+  .cta-band h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(30px, 5vw, 44px);
+    text-transform: uppercase;
+  }
+  .cta-band p {
+    color: var(--text-dim);
+    margin: 14px auto 30px;
+    max-width: 480px;
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 26px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">S.T.O.R.M<span>.</span> Studio</div>
+    <div class="links">
+      <a href="#portfolio">Réalisations</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#avis">Avis</a>
+    </div>
+    <a class="cta" href="https://discord.gg/REMPLACE-PAR-TON-LIEN" target="_blank" rel="noopener">Discuter d'un projet</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Studio de développement FiveM</div>
+      <h1>Scripts &amp; véhicules<br>sur mesure pour<br><em>ton serveur.</em></h1>
+      <p>On conçoit des systèmes complets, des petits ajustements et des véhicules taillés spécifiquement pour ton serveur — pas de template recyclé.</p>
+      <div class="actions">
+        <a class="btn-primary" href="https://discord.gg/REMPLACE-PAR-TON-LIEN" target="_blank" rel="noopener">Discuter d'un projet →</a>
+        <a class="btn-ghost" href="#portfolio">Voir les réalisations</a>
+      </div>
+    </div>
+
+    <div class="gauge-card">
+      <svg class="gauge-svg" viewBox="0 0 260 160" fill="none">
+        <path d="M20 140 A110 110 0 0 1 240 140" stroke="#383021" stroke-width="10" stroke-linecap="round"/>
+        <path d="M20 140 A110 110 0 0 1 175 45" stroke="#ffb020" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
+        <g stroke="#a89a7a" stroke-width="2">
+          <line x1="30" y1="140" x2="40" y2="132" />
+          <line x1="45" y1="90" x2="55" y2="94" />
+          <line x1="80" y1="55" x2="87" y2="63" />
+          <line x1="130" y1="40" x2="130" y2="50" />
+          <line x1="180" y1="55" x2="173" y2="63" />
+          <line x1="215" y1="90" x2="205" y2="94" />
+          <line x1="230" y1="140" x2="220" y2="132" />
+        </g>
+        <g class="gauge-needle" style="--needle-angle: 42deg;">
+          <line x1="130" y1="130" x2="130" y2="45" stroke="#ffb020" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="130" cy="130" r="8" fill="#ffb020"/>
+        </g>
+      </svg>
+      <div class="gauge-readout" id="gaugeCount">40+</div>
+      <div class="gauge-label">Projets livrés</div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">Réalisations</div>
+      <h2>Ce qu'on a déjà construit</h2>
+      <p>Quelques exemples de scripts et véhicules livrés à des serveurs FiveM. Remplace ces exemples par tes propres projets (captures, titres, descriptions).</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="project-card">
+        <div class="project-thumb">Ajoute une capture ici</div>
+        <div class="project-body">
+          <div class="project-ref">REF-014</div>
+          <h3>Système d'économie avancé</h3>
+          <p>Gestion complète de la monnaie, des banques et des taxes, avec historique des transactions.</p>
+          <span class="project-tag">Script</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Ajoute une capture ici</div>
+        <div class="project-body">
+          <div class="project-ref">REF-021</div>
+          <h3>Chop shop custom</h3>
+          <p>Système de désossage de véhicules volés avec mini-jeu et revente de pièces.</p>
+          <span class="project-tag">Script</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Ajoute une capture ici</div>
+        <div class="project-body">
+          <div class="project-ref">REF-009</div>
+          <h3>Skyline R34 Liberty Walk</h3>
+          <p>Conversion complète de carrosserie, intérieur refait et sonorité moteur sur mesure.</p>
+          <span class="project-tag">Véhicule</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Ajoute une capture ici</div>
+        <div class="project-body">
+          <div class="project-ref">REF-033</div>
+          <h3>HUD entièrement repensé</h3>
+          <p>Interface de jeu sur mesure, compatible ESX et QBCore, animations fluides.</p>
+          <span class="project-tag">Script</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Ajoute une capture ici</div>
+        <div class="project-body">
+          <div class="project-ref">REF-027</div>
+          <h3>Système de métiers</h3>
+          <p>Trois métiers complets (mineur, bûcheron, pêcheur) avec progression et vente.</p>
+          <span class="project-tag">Script</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Ajoute une capture ici</div>
+        <div class="project-body">
+          <div class="project-ref">REF-012</div>
+          <h3>Camion SWAT sur mesure</h3>
+          <p>Habillage complet, gyrophares fonctionnels et compartiment arrière équipé.</p>
+          <span class="project-tag">Véhicule</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tarifs" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">Tarifs</div>
+      <h2>Ce que ça coûte</h2>
+    </div>
+    <p class="price-note">Prix indicatifs à titre d'exemple — ajuste-les selon tes propres tarifs.</p>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Script simple</h3>
+        <div class="price-amount">40€ <span>et plus</span></div>
+        <div class="price-delay">Livraison en 2 à 4 jours</div>
+        <ul>
+          <li>Petite fonctionnalité ou commande</li>
+          <li>Ajustement d'un script existant</li>
+          <li>1 aller-retour de correction inclus</li>
+        </ul>
+        <a class="btn-ghost" href="https://discord.gg/REMPLACE-PAR-TON-LIEN" target="_blank" rel="noopener">Demander un devis</a>
+      </div>
+
+      <div class="price-card featured">
+        <h3>Script complexe</h3>
+        <div class="price-amount">120€ <span>et plus</span></div>
+        <div class="price-delay">Livraison en 1 à 2 semaines</div>
+        <ul>
+          <li>Système complet (économie, métiers, HUD...)</li>
+          <li>Compatible ESX / QBCore</li>
+          <li>Documentation d'installation incluse</li>
+          <li>2 semaines de correctifs inclus</li>
+        </ul>
+        <a class="btn-primary" href="https://discord.gg/REMPLACE-PAR-TON-LIEN" target="_blank" rel="noopener">Demander un devis</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Véhicule sur mesure</h3>
+        <div class="price-amount">60€ <span>et plus</span></div>
+        <div class="price-delay">Livraison en 3 à 7 jours</div>
+        <ul>
+          <li>Conversion ou habillage complet</li>
+          <li>Textures et intérieur personnalisés</li>
+          <li>Réglages handling inclus</li>
+        </ul>
+        <a class="btn-ghost" href="https://discord.gg/REMPLACE-PAR-TON-LIEN" target="_blank" rel="noopener">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">Avis clients</div>
+      <h2>Ce qu'ils en disent</h2>
+      <p>Retours d'exemple — remplace-les par de vrais avis une fois que tu en as reçu.</p>
+    </div>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-score">★★★★★ 5/5</div>
+        <p class="review-quote">Livré en avance, script nickel, aucun bug depuis deux mois d'utilisation.</p>
+        <div class="review-who">— Serveur Sunset RP</div>
+      </div>
+      <div class="review-card">
+        <div class="review-score">★★★★★ 5/5</div>
+        <p class="review-quote">Communication au top pendant tout le développement, exactement ce qu'on demandait.</p>
+        <div class="review-who">— Serveur NoLimit City</div>
+      </div>
+      <div class="review-card">
+        <div class="review-score">★★★★☆ 4/5</div>
+        <p class="review-quote">Très bon travail dans l'ensemble, juste un peu de retard sur la date de livraison.</p>
+        <div class="review-who">— Serveur Vice District</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band alt">
+  <div class="wrap">
+    <h2>Un projet en tête ?</h2>
+    <p>Passe sur le Discord pour discuter de ton besoin — script, véhicule, ou les deux.</p>
+    <a class="btn-primary" href="https://discord.gg/REMPLACE-PAR-TON-LIEN" target="_blank" rel="noopener">Rejoindre le Discord →</a>
+  </div>
+</section>
+
+<footer>
+  S.T.O.R.M. Studio — Développement FiveM sur mesure
+</footer>
+
+</body>
+</html>
