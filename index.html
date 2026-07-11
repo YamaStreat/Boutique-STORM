@@ -8,16 +8,16 @@
   @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
   :root {
-    --bg: #16140f;
-    --bg-panel: #1e1b14;
-    --bg-raised: #29241a;
-    --line: #383021;
-    --line-bright: #574a2c;
-    --text: #f2ede2;
-    --text-dim: #a89a7a;
-    --amber: #ffb020;
-    --amber-soft: rgba(255, 176, 32, 0.14);
-    --chrome: #cdeaf0;
+    --bg: #0c0a13;
+    --bg-panel: #14111e;
+    --bg-raised: #1d1829;
+    --line: #2b2438;
+    --line-bright: #3f3552;
+    --text: #f1eef8;
+    --text-dim: #a99cc2;
+    --amber: #9b5de5;
+    --amber-soft: rgba(155, 93, 229, 0.16);
+    --chrome: #d6d0e8;
     --tail-red: #e2483f;
     --font-display: 'Big Shoulders Display', sans-serif;
     --font-body: 'Work Sans', sans-serif;
@@ -25,13 +25,13 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  ::selection { background: rgba(255,176,32,0.25); }
+  ::selection { background: rgba(155,93,229,0.28); }
 
   html { scroll-behavior: smooth; }
 
   body {
     background:
-      radial-gradient(ellipse 900px 480px at 85% -8%, rgba(255,176,32,0.07), transparent),
+      radial-gradient(ellipse 900px 480px at 85% -8%, rgba(155,93,229,0.12), transparent),
       var(--bg);
     color: var(--text);
     font-family: var(--font-body);
@@ -77,7 +77,7 @@
   nav .links a:hover { color: var(--text); }
   nav .cta {
     background: var(--amber);
-    color: #1b1305;
+    color: #fbfaff;
     font-weight: 600;
     font-size: 13.5px;
     padding: 9px 18px;
@@ -137,7 +137,7 @@
   }
   .btn-primary {
     background: var(--amber);
-    color: #1b1305;
+    color: #fbfaff;
     font-weight: 600;
     font-size: 15px;
     padding: 13px 24px;
@@ -241,7 +241,7 @@
   .project-thumb {
     height: 150px;
     background:
-      repeating-linear-gradient(135deg, rgba(255,176,32,0.06) 0 2px, transparent 2px 14px),
+      repeating-linear-gradient(135deg, rgba(155,93,229,0.09) 0 2px, transparent 2px 14px),
       var(--bg-panel);
     display: flex;
     align-items: center;
@@ -314,7 +314,7 @@
     position: absolute;
     top: -11px; left: 24px;
     background: var(--amber);
-    color: #1b1305;
+    color: #fbfaff;
     font-family: var(--font-mono);
     font-size: 9.5px;
     letter-spacing: 1px;
@@ -446,7 +446,7 @@
     <div class="gauge-card">
       <svg class="gauge-svg" viewBox="0 0 260 160" fill="none">
         <path d="M20 140 A110 110 0 0 1 240 140" stroke="#383021" stroke-width="10" stroke-linecap="round"/>
-        <path d="M20 140 A110 110 0 0 1 175 45" stroke="#ffb020" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
+        <path d="M20 140 A110 110 0 0 1 175 45" stroke="#9b5de5" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
         <g stroke="#a89a7a" stroke-width="2">
           <line x1="30" y1="140" x2="40" y2="132" />
           <line x1="45" y1="90" x2="55" y2="94" />
@@ -457,8 +457,8 @@
           <line x1="230" y1="140" x2="220" y2="132" />
         </g>
         <g class="gauge-needle" style="--needle-angle: 42deg;">
-          <line x1="130" y1="130" x2="130" y2="45" stroke="#ffb020" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="130" cy="130" r="8" fill="#ffb020"/>
+          <line x1="130" y1="130" x2="130" y2="45" stroke="#9b5de5" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="130" cy="130" r="8" fill="#9b5de5"/>
         </g>
       </svg>
       <div class="gauge-readout" id="gaugeCount">40+</div>
