@@ -75,6 +75,7 @@
   }
   nav .links a { text-decoration: none; transition: color .15s; }
   nav .links a:hover { color: var(--text); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
   nav .cta {
     background: var(--amber);
     color: #fbfaff;
@@ -85,6 +86,12 @@
     text-decoration: none;
     white-space: nowrap;
   }
+  nav .cta.ghost {
+    background: none;
+    border: 1px solid var(--line-bright);
+    color: var(--text);
+  }
+  nav .cta.ghost:hover { border-color: var(--amber); color: var(--amber); }
   @media (max-width: 720px) {
     nav .links { display: none; }
   }
@@ -395,6 +402,9 @@
   .project-modal-video {
     margin-top: 20px;
   }
+  .project-modal-buy {
+    margin-top: 22px;
+  }
   .project-modal-video .video-slot {
     aspect-ratio: 16 / 9;
     background: var(--bg-raised);
@@ -558,7 +568,10 @@
       <a href="#tarifs">Tarifs</a>
       <a href="#avis">Avis</a>
     </div>
-    <a class="cta" href="https://discord.gg/DWSmxFqXw8" target="_blank" rel="noopener">Discuter d'un projet</a>
+    <div class="nav-actions">
+      <a class="cta ghost" href="https://storm-studio.tebex.store/" target="_blank" rel="noopener">Acheter</a>
+      <a class="cta" href="https://discord.gg/DWSmxFqXw8" target="_blank" rel="noopener">Discuter d'un projet</a>
+    </div>
   </div>
 </nav>
 
@@ -624,6 +637,7 @@
       <p id="projectModalDesc"></p>
       <span class="project-tag" id="projectModalTag"></span>
       <div class="project-modal-video" id="projectModalVideo"></div>
+      <a class="btn-primary project-modal-buy" href="https://storm-studio.tebex.store/" target="_blank" rel="noopener">Acheter sur la boutique →</a>
     </div>
   </div>
 </div>
