@@ -280,6 +280,10 @@
     color: var(--text-dim);
     font-size: 13.5px;
     line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .project-tag {
     display: inline-block;
@@ -398,6 +402,7 @@
     color: var(--text-dim);
     font-size: 14.5px;
     line-height: 1.6;
+    white-space: pre-line;
   }
   .project-modal-video {
     margin-top: 20px;
@@ -740,46 +745,20 @@
   // ------------------------------------------------------------------
   const PROJECTS = [
     {
+      ref: 'REF-041',
+      title: 'ESX PARKING — Garages, Fourrière & Gestion de Véhicules | ESX Legacy [FiveM]',
+      desc: "Par STORM Studio\n\nUn système complet de gestion de véhicules pour ton serveur ESX Legacy, avec une interface moderne et un outil d'administration en jeu — aucune configuration technique requise pour tes admins.\n\n✨ Fonctionnalités\n\n🔵 Garage — Zone dédiée pour sortir tes véhicules, avec un panel listant toute ta collection (au garage, dehors, en fourrière) triée d'un coup d'œil.\n\n🔴 Rangement — Range ton véhicule simplement en te garant dans la zone prévue.\n\n🟠 Fourrière — Système de mise en fourrière pour la police (/impound), récupération contre paiement d'une amende configurable.\n\n🔒 Verrouillage / déverrouillage — Touche U pour verrouiller ton véhicule à distance, avec une vraie animation de clé de voiture et un bip sonore.\n\n✏️ Renommage — Donne un surnom personnalisé à chacun de tes véhicules directement dans le panel.\n\n🗺️ Blips sur la carte — Chaque garage et fourrière est visible sur la carte, couleurs et icônes personnalisables.\n\n🛠️ Outil de placement admin — Ajoute de nouveaux garages et fourrières directement en jeu, sans toucher une seule ligne de code. Un panel cliquable guide chaque étape, et tout est sauvegardé et rechargé instantanément pour tous les joueurs — pas besoin de redémarrer le serveur.\n\n🎨 Interface soignée — Panel NUI sombre, moderne, en grille de tuiles, pensé pour rester lisible même avec des dizaines de véhicules.\n\n🔐 Sécurité côté serveur — Toute la logique sensible (propriété des véhicules, argent, permissions admin) est revalidée côté serveur. Impossible à contourner ou exploiter depuis le client.\n\n📦 Compatibilité ESX Legacy oxmysql — Installation en 5 minutes (voir le README inclus), sans configuration de coordonnées obligatoire au départ.\n\n💬 Support\n\n📖 Documentation complète incluse (installation, configuration, dépannage).\n💬 Rejoins notre Discord pour obtenir de l'aide, suivre les mises à jour et ouvrir un ticket : https://discord.gg/DWSmxFqXw8",
+      tag: 'Script',
+      images: ['images/ref-014-esx-parking.jpg'],
+      video: 'https://youtu.be/Ih4m9NhkiMU',
+    },
+    {
       ref: 'REF-014',
-      title: 'ESX PARKING — Garages, Fourrière & Gestion de Véhicules | ESX Legacy',
-      desc: "Par STORM Studio
-        
-Un système complet de gestion de véhicules pour ton serveur ESX Legacy, avec une interface moderne et un outil d'administration en jeu — aucune configuration technique requise pour tes admins.
-
-✨ Fonctionnalités
-
-🔵 Garage — Zone dédiée pour sortir tes véhicules, avec un panel listant toute ta collection (au garage, dehors, en fourrière) triée d'un coup d'œil.
-
-🔴 Rangement — Range ton véhicule simplement en te garant dans la zone prévue.
-
-🟠 Fourrière — Système de mise en fourrière pour la police (/impound), récupération contre paiement d'une amende configurable.
-
-🔒 Verrouillage / déverrouillage — Touche U pour verrouiller ton véhicule à distance, avec une vraie animation de clé de voiture et un bip sonore.
-
-✏️ Renommage — Donne un surnom personnalisé à chacun de tes véhicules directement dans le panel.
-
-🗺️ Blips sur la carte — Chaque garage et fourrière est visible sur la carte, couleurs et icônes personnalisables.
-
-🛠️ Outil de placement admin — Ajoute de nouveaux garages et fourrières directement en jeu, sans toucher une seule ligne de code. Un panel cliquable guide chaque étape, et tout est sauvegardé et rechargé instantanément pour tous les joueurs — pas besoin de redémarrer le serveur.
-
-🎨 Interface soignée — Panel NUI sombre, moderne, en grille de tuiles, pensé pour rester lisible même avec des dizaines de véhicules.
-
-🔐 Sécurité côté serveur — Toute la logique sensible (propriété des véhicules, argent, permissions admin) est revalidée côté serveur. Impossible à contourner ou exploiter depuis le client.
-
-📦 Compatibilité
-ESX Legacy
-oxmysql
-Installation en 5 minutes (voir le README inclus), sans configuration de coordonnées obligatoire au départ.
-
-💬 Support
-
-📖 Documentation complète incluse (installation, configuration, dépannage).
-
-💬 Rejoins notre Discord pour obtenir de l'aide, suivre les mises à jour et ouvrir un ticket :
-https://discord.gg/DWSmxFqXw8",
+      title: 'BMW M3 G80',
+      desc: "BMW M3 G80 débadgée avec un handling optimisé. Elle colle extrêmement bien au sol, tourne parfaitement et possède un excellent freinage. Une conduite stable, réactive et performante.",
       tag: 'Véhicule',
       images: ['images/ref-014-1.png'],
-      video: https://youtu.be/Ih4m9NhkiMU
+      video: null,
     },
     {
       ref: 'REF-021',
