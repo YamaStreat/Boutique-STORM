@@ -258,9 +258,9 @@
     font-size: 11.5px;
     letter-spacing: .5px;
     text-align: center;
-    padding: 10px;
     border-bottom: 1px solid var(--line);
   }
+  .project-thumb .thumb-placeholder { padding: 10px; }
   .project-body { padding: 18px 20px 20px; }
   .project-ref {
     font-family: var(--font-mono);
@@ -810,7 +810,7 @@
         <div class="project-thumb">
           ${p.images.length > 0
             ? `<img src="${p.images[0]}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;object-position:${p.imagePosition || 'center'};">`
-            : 'Ajoute une capture ici'}
+            : '<span class="thumb-placeholder">Ajoute une capture ici</span>'}
           ${p.images.length > 1 ? `<span class="project-thumb-more">+${p.images.length - 1}</span>` : ''}
         </div>
         <div class="project-body">
