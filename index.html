@@ -749,6 +749,7 @@
       desc: "Par STORM Studio\n\nUn système complet de gestion de véhicules pour ton serveur ESX Legacy, avec une interface moderne et un outil d'administration en jeu — aucune configuration technique requise pour tes admins.\n\n✨ Fonctionnalités\n\n🔵 Garage — Zone dédiée pour sortir tes véhicules, avec un panel listant toute ta collection (au garage, dehors, en fourrière) triée d'un coup d'œil.\n\n🔴 Rangement — Range ton véhicule simplement en te garant dans la zone prévue.\n\n🟠 Fourrière — Système de mise en fourrière pour la police (/impound), récupération contre paiement d'une amende configurable.\n\n🔒 Verrouillage / déverrouillage — Touche U pour verrouiller ton véhicule à distance, avec une vraie animation de clé de voiture et un bip sonore.\n\n✏️ Renommage — Donne un surnom personnalisé à chacun de tes véhicules directement dans le panel.\n\n🗺️ Blips sur la carte — Chaque garage et fourrière est visible sur la carte, couleurs et icônes personnalisables.\n\n🛠️ Outil de placement admin — Ajoute de nouveaux garages et fourrières directement en jeu, sans toucher une seule ligne de code. Un panel cliquable guide chaque étape, et tout est sauvegardé et rechargé instantanément pour tous les joueurs — pas besoin de redémarrer le serveur.\n\n🎨 Interface soignée — Panel NUI sombre, moderne, en grille de tuiles, pensé pour rester lisible même avec des dizaines de véhicules.\n\n🔐 Sécurité côté serveur — Toute la logique sensible (propriété des véhicules, argent, permissions admin) est revalidée côté serveur. Impossible à contourner ou exploiter depuis le client.\n\n📦 Compatibilité ESX Legacy oxmysql — Installation en 5 minutes (voir le README inclus), sans configuration de coordonnées obligatoire au départ.\n\n💬 Support\n\n📖 Documentation complète incluse (installation, configuration, dépannage).\n💬 Rejoins notre Discord pour obtenir de l'aide, suivre les mises à jour et ouvrir un ticket : https://discord.gg/DWSmxFqXw8",
       tag: 'Script',
       images: ['images/ref-014-esx-parking.jpg'],
+      imagePosition: 'top',
       video: 'https://youtu.be/Ih4m9NhkiMU',
     },
     {
@@ -757,6 +758,7 @@
       desc: "BMW M3 G80 débadgée avec un handling optimisé. Elle colle extrêmement bien au sol, tourne parfaitement et possède un excellent freinage. Une conduite stable, réactive et performante.",
       tag: 'Véhicule',
       images: ['images/ref-014-1.png'],
+      imagePosition: 'center 30%',
       video: null,
     },
     {
@@ -807,7 +809,7 @@
       <button class="project-card" onclick="openProject(${i})">
         <div class="project-thumb">
           ${p.images.length > 0
-            ? `<img src="${p.images[0]}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;object-position:center;">`
+            ? `<img src="${p.images[0]}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;object-position:${p.imagePosition || 'center'};">`
             : 'Ajoute une capture ici'}
           ${p.images.length > 1 ? `<span class="project-thumb-more">+${p.images.length - 1}</span>` : ''}
         </div>
@@ -835,7 +837,7 @@
   function setMainImage(project, index) {
     const main = document.getElementById('projectModalMain');
     if (project.images.length > 0) {
-      main.innerHTML = `<img src="${project.images[index]}" alt="${project.title}">`;
+      main.innerHTML = `<img src="${project.images[index]}" alt="${project.title}" style="object-position:${project.imagePosition || 'center'};">`;
     } else {
       main.innerHTML = 'Ajoute des captures ici';
     }
